@@ -1,0 +1,43 @@
+.Footer{
+    display: flex;
+    justify-content: space-around;
+    background: rgb(98,98,111);
+    color: white;
+   height:400px;
+   margin-top: 19px;
+}
+
+.FooterPart1__facbooklogo{
+width: 25px;
+margin: 8px;
+
+}
+
+.FooterPart1__instagramlogo{
+    width: 20px;
+    margin: 8px;
+}
+.FooterPart1__youtubelogo{
+    width: 20px;
+    margin: 8px;
+}
+
+.FooterPart2 li, .FooterPart3 li{
+list-style: none;
+padding: 8px;
+}
+.FooterPart3{
+    display: flex;
+}
+.FooterPart3{
+    margin-top: -15px;
+}
+
+.Footer .logo{
+width: 150px;
+height: 70px;
+margin-top:328px;
+position: absolute;
+right: 8px;
+/* bottom: 0; */
+}

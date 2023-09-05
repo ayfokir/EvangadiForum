@@ -1,0 +1,28 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    width: 1000px;
+    margin: 0 auto;
+}
+.header img{
+    width: 200px;
+}
+
+.header__signin{
+    display: flex;
+    cursor: pointer;
+}
+
+.header__signin__button{
+cursor: pointer;
+}
+
+.header__signin h3, .header__signin button{
+    margin: 28px;
+}
+.header__signin button{
+    width: 150px;
+    height: 30px;
+    background-color:  dodgerblue;
+    border: 1px solid dodgerblue;
+}
