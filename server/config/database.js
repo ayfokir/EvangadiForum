@@ -49,8 +49,8 @@ let answer = `CREATE TABLE if not exists answer(
     question_id int not null,
     PRIMARY KEY (answer_id),
     FOREIGN KEY (user_id) REFERENCES registration(user_id),
-    FOREIGN KEY (question_id) REFERENCES question(question_id ) 
-)`;
+    FOREIGN KEY (question_id) REFERENCES question(question_id )
+    )`;
 //let us creat the table  
 
 pool.query( registration, ( err, rows, fields ) =>

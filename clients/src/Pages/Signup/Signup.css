@@ -22,13 +22,25 @@ margin-left: 8px;
     border: none;
     width: 100%;
     margin-left: 7px;
+    cursor: pointer;
 }
 .signupPage__userData{
     padding: 7px;
 }
+.firstNameAndLastName{
+
+}
+.firstName{
+   margin-left: 66px;
+   width: 137px;
+}
+.lastName{
+    margin-right: 66px;
+    width: 137px;
+}
 .email, .userName, .password{
     padding: 7px;
-    width: 100%;
+    width: 300PX;
     border-radius: 4px;
 }
 .firstName, .lastName {

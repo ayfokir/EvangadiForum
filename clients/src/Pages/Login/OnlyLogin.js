@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Login.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -21,33 +21,38 @@ function OnlyLogin ()
     
          const handleSubmit = (e) => {
          e.preventDefault();
-         try {
-           //sending user data to the database to be logged in
-           axios
-              .post("http://localhost:5000/api/users/login", {
-               email: form.email,
-               password: form.password
-              })
-             .then((response) => {
-               //update global state with response from backend(user-info)
-               setUserData({
-                 // be axios return yetedergew value yemekemetew data wust new that is why i say:  loginRes.data.token
-                 token: response.data.token,
-                 user: response.data.user
-               });
-               //set localStorage with the token
-               localStorage.setItem("auth-token", response.data.token);
-               //navigate user to homepage
-
-               //   navigate("/"); // this is replace the useEffect function below use either of them.
-             });
+           try
+           {
+              document.getElementById("email").focus();
+             if ( form.email && form.password ) // to handle error when the user sign in with empty password and email.
+             {
+             
+               axios
+                  .post("http://localhost:5000/api/users/login", {
+                   email: form.email,
+                   password: form.password
+                  })
+                 .then((response) => {
+                   //update global state with response from backend(user-info)
+                   setUserData({
+                     // be axios return yetedergew value yemekemetew data wust new that is why i say:  loginRes.data.token
+                     token: response.data.token,
+                     user: response.data.user
+                   });
+                   //set localStorage with the token
+                   localStorage.setItem("auth-token", response.data.token);
+                 });
+           }
          } catch (err) {
-           // console.log( "problem", err.response.data.msg )
            console.log("problem is happen");
            console.log(err);
-           // alert(err.response.data.msg)
          }
-       }; 
+  }; 
+  
+  useEffect(() => {
+    document.getElementById("email").focus();
+  }, []);
+
     return (
       <>
             { value ? <Signup /> :
@@ -62,6 +67,7 @@ function OnlyLogin ()
                             placeholder="Your Email"  
                             className="emailInput"
                             type="text"
+                            id='email'
                             name="email"
                             onChange={ handleChange }
                         />

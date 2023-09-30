@@ -6,9 +6,8 @@ import './Login.css'
 import LoginHeader from './LoginHeader';
 import Signup from '../Signup/Signup';
 
-function Login ({signIn})
+function Login ()
 {
-
     const [ userData, setUserData ] = useContext( userContext );
     const navigate = useNavigate();
     const [ form, setForm ] = useState( {} );
@@ -16,44 +15,45 @@ function Login ({signIn})
     const handleChange = ( e ) =>
     {
       setForm( { ...form, [ e.target.name ]: [ e.target.value ] } )
-      setUserData({...userData, email: form.email}) // user login siaderg emalun felegew new data layer lay user "/answer" router lay display saderg silemefelgew
   }
-  // console.log( userData );
     const handleSubmit =  ( e ) =>
     { e.preventDefault();
-        try
+      try
+      {
+        document.getElementById("email").focus();
+        if ( form.email && form.password ) // to handle error when the user sign in with empty password and email.
         {
-          //sending user data to the database to be logged in  
-    axios.post(
-              "http://localhost:5000/api/users/login",
-              {
-                email: form.email,
-                password: form.password
-              }  
-            ).then( response => {
-              //update global state with response from backend(user-info)
-              setUserData( (earlier) =>  {
-                // be axios return yetedergew value yemekemetew data wust new that is why i say:  loginRes.data.token
-            return   { ...earlier,
-                token: response.data.token,
-                user: response.data.user}
-              });
-              //set localStorage with the token
-              localStorage.setItem("auth-token", response.data.token);
-              //navigate user to homepage
-                
-            //   navigate("/"); // this is replace the useEffect function below use either of them.
-            })
+          axios.post(
+                    "http://localhost:5000/api/users/login",
+                    {
+                      email: form.email,
+                      password: form.password
+                    }  
+          ).then( response =>
+          {
+            console.log("dershalew ayfo inside login")
+            console.log( response.data.user );
+                    //update global state with response from backend(user-info)
+                    setUserData( (earlier) =>  {
+                      // be axios return yetedergew value yemekemetew data wust new that is why i say:  loginRes.data.token
+                  return   { ...earlier,
+                      token: response.data.token,
+                      user: response.data.user}
+                    });
+                    //set localStorage with the token
+                    localStorage.setItem("auth-token", response.data.token);
+                  //   navigate("/"); // this is replace the useEffect function below use either of them.
+          } )
         }  
+         }
         
         catch ( err )
         {
-            // console.log( "problem", err.response.data.msg )
             console.log( "problem is happen" )
-            console.log(err)
-            // alert(err.response.data.msg)    
+            console.log(err)   
         }
   } 
+
     const creatAccount = () =>
     {
         if ( userData.value1 )
@@ -73,33 +73,39 @@ function Login ({signIn})
           setUserData((earlier) => {
             return { ...earlier, value2: true };
           });
-          
-        }  
+    }
   }
-
+  
+  
+  //The use Effect below is used to checke whether a user is successfully logged in or not 
+  //if the user is successfully loged in go to home page
     useEffect( () =>  
     {
-        if ( userData.user ) navigate( '/' );
-    }, [ userData.user, navigate ] ) // you can remove navigate here
-    
+    if ( userData.token ) navigate( '/' );
+    }, [ userData.token, navigate ] ) // you can remove navigate here
+      
+      useEffect( () =>
+  {
+    document.getElementById("email").focus();
+ }, [])
     return (  
       <>  
-        <LoginHeader signIn={signIn} />
+        <LoginHeader focus = {() => document.getElementById("email").focus() } />  
         <div className="superParent">
-          {userData.value1 && userData.value2 ? (
+          {userData.value1 && userData.value2 ? ( 
             <Signup />
-          ) : (
+          ) : (  
             <div className="superParent__signinPage" id="signinPage">
               <h1>Login to Your Account</h1>
               <h3>
-                Don't Have an Account ? &nbsp;
+                Don't Have an Account ? &nbsp;  
                 <Link onClick={creatAccount}>Create a new account</Link>
               </h3>
               <form onSubmit={handleSubmit}>
                 <input
                   placeholder="Your Email"
-                    className="emailInput"
-                    id='email'
+                  className="emailInput"
+                  id='email'
                   type="text"
                   name="email"
                   onChange={handleChange}
@@ -114,10 +120,10 @@ function Login ({signIn})
                 />
                 <br />
                 <button className="superParent__signinPage__marginTop">
-                  Submit
+               Sign in
                 </button>
               </form>
-              <Link onClick={creatAccount}>Create a new account</Link>
+              <Link onClick={creatAccount}  >Create a new account</Link>
             </div>
           )}
 

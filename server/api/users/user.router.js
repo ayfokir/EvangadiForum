@@ -3,16 +3,16 @@ const auth = require( './middleware/auth' );
 const { creatUser, getUsers, getUserById, login, submitQuestion, getQuestions, submitAnswer, getAnswer } = require( "./user.controller" );  
 
 
-router.post( '/', creatUser );// "slashe" becha kehone(ke post man silake malet new ) creatUser yemelewun siralegne 
-router.get( "/all", getUsers );
-router.get( "/",auth, getUserById );//we need a token
-router.post("/login", login)
-//authentication yemeyasfelgrn user is valid or not 
+router.post( '/', creatUser );// The user registered and consequently get a token
+router.post("/login", login) // The user Logged in and consequently get Token
+//authentication: Used to check is the user valid user or not 
 //auth: is middleware
-router.post( "/question", submitQuestion );
-router.get( "/getQuestions", getQuestions );
-router.post( "/answer", submitAnswer );
-router.get("/getAnswer", getAnswer);
+router.get( "/all",auth, getUsers );//This also not part of  the project.
+router.get( "/auth",auth, getUserById );//This also not part of  the project.
+router.post( "/question/:token",auth, submitQuestion );
+router.get( "/getQuestions/:token",auth, getQuestions );
+router.post( "/answer/:token",auth, submitAnswer );
+router.get("/getAnswer/:token",auth, getAnswer);
 
 
 module.exports = router;

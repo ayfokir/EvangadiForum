@@ -59,13 +59,17 @@ module.exports = {
     );
   },
 
-  userById: (id, callback) => {
+  userById: ( id, callback ) =>
+  {
     pool.query(
-      `SELECT registration.user_id, user_name, user_email, first_name, last_name FROM  registration LEFT JOIN
-      profile ON registration.user_id = profile.user_id WHERE registration.user_id = ? `,
+      `SELECT registration.user_id, user_name, user_email, first_name, last_name FROM  registration LEFT JOIN profile ON registration.user_id = profile.user_id WHERE registration.user_id = ? `,
       [id],
       (err, result) => {
-        if (err) return callback(err);
+        if ( err )  
+        {
+          console.log("erro new ayfo")
+          return callback( err );
+        }
         return callback(null, result[0]);
       }
     );
@@ -79,7 +83,7 @@ module.exports = {
         return callback(null, result[0]);
       }
     );
-  },
+  },  
 
   getAllUsers: (callback) => {
     pool.query(
@@ -100,12 +104,10 @@ module.exports = {
   //   );
   // },
 
-  
-
   getquestions: (callback) => {
     console.log("hi");
     pool.query(
-      `SELECT registration.user_email, question.question, question.question_description, question.user_id, question.question_id FROM registration JOIN question ON registration.user_id = question.user_id  `,
+      `SELECT registration.user_email, question.question, question.question_description, question.user_id, question.question_id FROM registration JOIN question ON registration.user_id = question.user_id ORDER BY question_id DESC `,
       (err, result) => {
         if (err) return callback(err);
         return callback(null, result);
@@ -114,7 +116,7 @@ module.exports = {
   },
   getanswer: (callback) => {
     pool.query(
-      `SELECT answer.user_id, answer.answer, answer.question_id FROM answer  JOIN question ON answer.question_id = question.question_id`,
+      `SELECT registration.user_email, answer.answer, answer.question_id FROM answer JOIN registration ON answer.user_id = registration.user_id  ORDER BY answer_id DESC`,
       (err, result) => {
         if (err) return callback(err);
         return callback(null, result);
@@ -122,6 +124,8 @@ module.exports = {
     );
   }
 };
+
+
 
 
 

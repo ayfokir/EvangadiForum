@@ -11,9 +11,8 @@ function ContextProvider (props)
         question: "hello",
         question_description: "yes man",
         questionId: 2,
-        AnswerUserId: [],
-        Answer:  [],
-        
+        // AnswerUserId: [],
+        // Answer:  [],
         }
   );
   

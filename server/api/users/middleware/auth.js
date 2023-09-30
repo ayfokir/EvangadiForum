@@ -8,7 +8,10 @@ const auth = ( req, res, next ) => // authenticate ketederege buhala "next" yeme
 {
     try
     {
-        const token = req.header("x-auth-token"); // ke front end yemelake token, from header
+        // const token = req.header( "x-auth-token" ); // This token is send from front end using header, to get userById
+        const token = req.params.token; // This token is send from front end using params parameter
+        console.log("below is header token")
+        console.log(token)
         if ( !token )
         {
             return res.status( 401 ).json( { msg: "No authentication token, authorization denied" } );
@@ -21,6 +24,7 @@ const auth = ( req, res, next ) => // authenticate ketederege buhala "next" yeme
                 return res.status( 401 ).json( { msg: "token verification failed, authorization denied." } );
             }
         req.id = verified.id
+        console.log("dershalew inside auth")
         next(); 
     }
     catch {

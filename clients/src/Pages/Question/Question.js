@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Question.css'
 import axios from 'axios'
 import { userContext } from '../../Context/UserContext';
@@ -20,17 +20,17 @@ function Question ()
     e.preventDefault();  
       try
       {
-        console.log( form )
-        console.log("hi man inside submit")
-          //sending user data to the database to be logged in  
+        console.log( form )  
+        console.log("hi man inside submit")  
     axios
-      .post("http://localhost:5000/api/users/question", {
+      .post(`http://localhost:5000/api/users/question/${userData.token}`, {
         myQuestion: form.myQuestion,
         question_description: form.question_description,
         user: userData.user
       })
       .then( ( response ) =>
       {
+      
         navigate("/")
         console.log( response );
 
@@ -45,6 +45,14 @@ function Question ()
             // alert(err.response.data.msg)    
         }
   } 
+
+  useEffect(() => {
+    if (!userData.user) navigate("/login");
+  }, [userData.user, navigate]);
+
+useEffect(() => {
+  document.getElementById("textArea").focus();
+}, []);
 
   return (
     <div>
@@ -62,12 +70,13 @@ function Question ()
         </Link>
       </div>
 
-      <form onSubmit={handleSubmit} className="inputarea">
+      <form onSubmit={handleSubmit} className="inputarea" id='questionForm'>
         <input
           className="inputarea__title"
           type="text"
           name="myQuestion"
           placeholder="Title"
+          id='textArea'
           onChange={handleChange}
         />
         <textarea

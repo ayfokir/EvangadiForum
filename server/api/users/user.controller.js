@@ -63,10 +63,15 @@ module.exports = {
                       .status(500)
                       .json({ msg: "database connection eror" });
                   }
-                  return res.status(200).json({
-                    msg: "new user add successfully",
-                    data: results
-                  });
+                  pool.query( `SELECT user_id, user_name FROM registration WHERE user_email = ?`, [ email ], ( err, result ) =>
+                  {
+                    const token = jwt.sign({ id: result.user_id }, process.env.JWT_SECRET, {expiresIn: "2h" });
+                    return res.status(200).json({
+                      msg: "new user add successfully",
+                      token,
+                      user: result[0]
+                    });
+                  })
                 });
               }
             );
@@ -88,7 +93,9 @@ module.exports = {
     // const id = req.params.id;
     // console.log( "id ===>", id, "user===>", req.id );
     userById(req.id, (err, results) => {
-      if (err) {
+      if ( err )
+      {
+        console.log("the error is here")
         console.log(err);
         return res.status(500).json({ msg: "database connection error" });
       }
@@ -125,15 +132,14 @@ module.exports = {
         return res.status(404).json({ msg: "Invalide Credentials" });
       }
       //token: automatically generate yemedereg json web token new
-      const token = jwt.sign({ id: results.user_id }, process.env.JWT_SECRET, {
-        expiresIn: "2h"
+      const token = jwt.sign({ id: results.user_id }, process.env.JWT_SECRET, {expiresIn: "2h"
       });
       console.log(token);
       return res.json({
         token,
         user: {
-          id: results.user_id,
-          display_name: results.user_name // welecome ayfo yemebalew bezeh grape tedergo new
+          user_id: results.user_id,
+          user_name: results.user_name // welecome ayfo yemebalew bezeh grape tedergo new
         }
       });
     });
@@ -143,7 +149,7 @@ module.exports = {
     //  const { myQuestion, question_description } = req.body;
     //  console.log("this is inside question")
     //  console.log( req.body );
-    const userId = req.body.user.id;
+    const userId = req.body.user.user_id;
     const myQuestion = req.body.myQuestion;
     const question_description = req.body.question_description;
     console.log({ userId, myQuestion, question_description });
@@ -162,7 +168,7 @@ module.exports = {
 
   submitAnswer: ( req, res ) =>
   {
-    const userId = req.body.user.id;
+    const userId = req.body.user.user_id;
     const answer = req.body.answer;
     const questionId = req.body.questionId;
     console.log("your body content")
@@ -178,7 +184,7 @@ module.exports = {
       });
     });
 },
-
+  
 
   getQuestions: ( req, res ) =>
   {
