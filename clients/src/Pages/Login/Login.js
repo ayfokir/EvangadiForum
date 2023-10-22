@@ -11,49 +11,93 @@ function Login ()
     const [ userData, setUserData ] = useContext( userContext );
     const navigate = useNavigate();
     const [ form, setForm ] = useState( {} );
+    const [ emailError, setEmailError ] = useState("");
+  const [ serverError, setServerError ] = useState( "" );
+  const [ passwordError, setPasswordError ] = useState( "" );
 
     const handleChange = ( e ) =>
     {
       setForm( { ...form, [ e.target.name ]: [ e.target.value ] } )
   }
+  console.log(form)
     const handleSubmit =  ( e ) =>
-    { e.preventDefault();
-      try
+    {
+      e.preventDefault();
+      if ( !form.email )
       {
-        document.getElementById("email").focus();
-        if ( form.email && form.password ) // to handle error when the user sign in with empty password and email.
-        {
-          axios.post(
-                    "http://localhost:5000/api/users/login",
-                    {
-                      email: form.email,
-                      password: form.password
-                    }  
-          ).then( response =>
-          {
-            console.log("dershalew ayfo inside login")
-            console.log( response.data.user );
-                    //update global state with response from backend(user-info)
-                    setUserData( (earlier) =>  {
-                      // be axios return yetedergew value yemekemetew data wust new that is why i say:  loginRes.data.token
-                  return   { ...earlier,
-                      token: response.data.token,
-                      user: response.data.user}
-                    });
-                    //set localStorage with the token
-                    localStorage.setItem("auth-token", response.data.token);
-                  //   navigate("/"); // this is replace the useEffect function below use either of them.
-          } )
-        }  
-         }
-        
-        catch ( err )
-        {
-            console.log( "problem is happen" )
-            console.log(err)   
+        setEmailError( "Email Required" )
+        return;
+      }
+     if ( !form.email[0].includes( '@' ) )
+        {   
+              setEmailError( 'Invalid email format' );
+              console.log("inside ")
+              return;
         }
-  } 
-
+       if (!form.password || form.password[0].lenght < 8) {
+         console.log("asbeh sira");
+         setPasswordError("Password must be at least 8 characters long");
+         return;
+       }
+      document.getElementById( "email" ).focus();
+      
+      if ( form.email && form.password )
+      {
+            const regex = /^\S+@\S+\.\S+$/;
+            if (!regex.test(form.email[0])) {
+              setEmailError( "Invalid email format" );
+              console.log("again inside ")
+              return;
+            }
+      
+       
+        try
+        {
+            axios.post(
+                      "http://localhost:5000/api/users/login",
+                      {
+                        email: form.email,
+                        password: form.password
+                      }  
+            ).then( response =>
+            {
+              console.log("dershalew ayfo inside login negne ")
+              console.log( response.data.user );
+                      //update global state with response from backend(user-info)
+                      setUserData( (earlier) =>  {
+                        // be axios return yetedergew value yemekemetew data wust new that is why i say:  loginRes.data.token
+                    return   { ...earlier,
+                        token: response.data.token,
+                        user: response.data.user}
+                      } );
+              if ( !response.data.user )
+              {
+                console.log("not token yes man ")
+                navigate( "/login" )
+                setPasswordError( response.data.msg );
+                return;
+                }
+                      //set localStorage with the token 
+                localStorage.setItem( "auth-token", response.data.token );
+                localStorage.setItem("user_name", response.data.user.user_name);
+                localStorage.setItem( "user_id", response.data.user.user_id );
+              
+              // navigate("/"); // this is replace the useEffect function below use either of them.
+              if ( !response.data.user )
+              {
+                setServerError(response.data.msg)
+              }
+            } )
+          }
+          
+          catch ( err )
+          {
+              console.log( "problem is happen" )
+          console.log( err )  
+          setServerError("An error has occurred. Please try again later." + err);
+        }
+      } 
+      }
     const creatAccount = () =>
     {
         if ( userData.value1 )
@@ -81,8 +125,9 @@ function Login ()
   //if the user is successfully loged in go to home page
     useEffect( () =>  
     {
-    if ( userData.token ) navigate( '/' );
-    }, [ userData.token, navigate ] ) // you can remove navigate here
+      if ( localStorage.getItem( "auth-token" ) ) navigate( "/" );
+      console.log("not have token")
+    }  ) // you can remove navigate here
       
       useEffect( () =>
   {
@@ -101,7 +146,8 @@ function Login ()
                 Don't Have an Account ? &nbsp;  
                 <Link onClick={creatAccount}>Create a new account</Link>
               </h3>
-              <form onSubmit={handleSubmit}>
+                <form onSubmit={ handleSubmit }>
+                {serverError && <div className="validation-error" role="alert">{serverError}</div>}
                 <input
                   placeholder="Your Email"
                   className="emailInput"
@@ -109,7 +155,8 @@ function Login ()
                   type="text"
                   name="email"
                   onChange={handleChange}
-                />
+                  />
+                  {emailError && <div className="validation-error" role="alert">{emailError}</div>}
                 <br />
                 <input
                   className="passwordInput"
@@ -117,7 +164,8 @@ function Login ()
                   name="password"
                   placeholder="Your Password"
                   onChange={handleChange}
-                />
+                  />
+                  {passwordError && <div className="validation-error" role="alert">{passwordError}</div>}
                 <br />
                 <button className="superParent__signinPage__marginTop">
                Sign in

@@ -8,6 +8,8 @@ import Home from "./Pages/Home/Home.js";
 import Footer from "./Pages/Footer/Footer";
 import Questions from "./Pages/Question/Questions";
 import Answer from "./Pages/Answer/Answer";
+import Edit from "./Pages/Edit/Edit"
+import EditAnswer from './Pages/Edit/EditAnswer'
 //if you have named import dont forget .js extension
 function App() {
   const [ userDta, setUserData ] = useContext( userContext );
@@ -55,11 +57,11 @@ function App() {
 
   //below is used to remove the token from the local storage when any page of the "App" component  is refresh
   
-  useEffect( () =>
-  {
-    console.log("used to clear")  
-    localStorage.clear(); 
-  }, [] ); 
+  // useEffect( () =>
+  // {
+  //   console.log("used to clear")  
+  //   localStorage.clear(); 
+  // }, [] ); 
   
   console.log("alehu everywhere") 
   
@@ -70,6 +72,7 @@ function App() {
       return { ...earlier, token: undefined, user: undefined };
     });
     localStorage.setItem("auth-token", "");
+    localStorage.setItem("user_id", "");
   };
   // useEffect(() => {
   //   checkLoggedIn(); //automatically run yemedereg
@@ -79,6 +82,8 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/editAnswer" element = {<EditAnswer  logout={logout} value = {true} />}  ></Route>
+        <Route path="/edit" element = {<Edit  logout={logout}/>} ></Route> 
         <Route path="/ask-questions"  element={<Questions logout={logout} />} ></Route>
         <Route path="/login" element={ <> <Login /> <Footer /></> }> </Route>
         <Route path="/" element={  <>   <Home logout={logout} />  <Footer /> </>} ></Route>

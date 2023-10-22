@@ -3,17 +3,14 @@ import LoginHeader from '../Login/LoginHeader'
 import Footer from '../Footer/Footer'
 import { userContext } from '../../Context/UserContext';
 import axios from 'axios';
-import './Answer.css'
+import '../Answer/Answer.css'
 import { Link,  useNavigate} from 'react-router-dom';
 import PersonIcon from "@mui/icons-material/Person";
 import Question from './../Question/Question';
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-function Answer ( { logout } )
+function Answer ( { logout, value } )
 {
-  let userId = localStorage.getItem( "user_id" );
-  userId = parseInt( userId );
   const navigate = useNavigate();
   const [userData, setUserData] = useContext(userContext);
   const [userAndQuestion, setUserAndQuestion] = useState({});
@@ -46,32 +43,32 @@ function Answer ( { logout } )
       });
   }, []);
 
-    useEffect( () =>
-    {
-      console.log( "yesss" )
-      console.log(localStorage.getItem("question_id"));
-    fetch(`http://localhost:5000/api/users/getAnswer/${localStorage.getItem("auth-token")}`)
-      .then((res) => res.json())
-      .then( ( products ) =>
+//     useEffect( () =>
+//     {
+//       console.log( "yesss" )
+//       console.log(localStorage.getItem("question_id"));
+//     fetch(`http://localhost:5000/api/users/getAnswer/${localStorage.getItem("auth-token")}`)
+//       .then((res) => res.json())
+//       .then( ( products ) =>
       
-      {
-        console.log("below is answersss")
-        console.log(products.data)
-        setAnswer( () =>
-        {
-        return  products.data.filter( ( uniquAnswe ) =>
-          {
-          return uniquAnswe.question_id === questionId;
-          })
-        } );
-        setDisplayAnswer( true );
-        console.log("inside answer page") 
-        console.log( products.data );
-      })
-      .catch((error) => {
-        console.log("Error is happen" + error);
-      });
-  }, [tester]);
+//       {
+//         console.log("below is answersss")
+//         console.log(products.data)
+//         setAnswer( () =>
+//         {
+//         return  products.data.filter( ( uniquAnswe ) =>
+//           {
+//           return uniquAnswe.question_id === questionId;
+//           })
+//         } );
+//         setDisplayAnswer( true );
+//         console.log("inside answer page") 
+//         console.log( products.data );
+//       })
+//       .catch((error) => {
+//         console.log("Error is happen" + error);
+//       });
+//   }, [tester]);
 
 console.log(answers)
 
@@ -81,31 +78,30 @@ console.log(answers)
       return { ...earlier, [e.target.name]: [e.target.value] };
     });
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
    document.getElementById("textArea").focus();
     if ( form.answer && localStorage.getItem( "user_id" ) && localStorage.getItem( "question_id" ) )
     {
-      try {
-        axios
-          .post(`http://localhost:5000/api/users/answer/${localStorage.getItem("auth-token")}`, {
+            try {  
+            axios
+            .post(`http://localhost:5000/api/users/editAnswer/${localStorage.getItem("auth-token")}`, {
             answer: form.answer,
-            user: localStorage.getItem("user_id"),
-            questionId: localStorage.getItem("question_id")
-          })
-          .then((response) => {
+            answerId: localStorage.getItem("answer_id")
+            })   
+            .then((response) => {
             setTester( true );
-            document.getElementById("answerForm").reset();
-          });
-      } catch (err) {
+            document.getElementById( "answerForm" ).reset();
+            navigate("/answer")
+            });
+        } catch (err) {
         console.log("Error from PostAnswer");
         console.log(err);
-     
-      }
+        
+        }
     }
-
-  };
+    };
 
   //The useEffect function below is used to display login page if a user refreshes the current page. you can also use  userData.user
   useEffect(() => {
@@ -117,34 +113,7 @@ console.log(answers)
     document.getElementById("textArea").focus();
   }, [])
   
-  const deleteAnswer = ( answer_id, answerUserId ) =>
-      {
-    if ( userId === answerUserId )
-    {
-      console.log("yes yeraseh answer nw")
-      fetch( `http://localhost:5000/api/users/deleteAnswer/${ answer_id }` )
-        .then( res => res.json() )
-        .then( response =>
-        {
-            console.log( response )
-            window.location.reload(false);
-          }
-          )
-    }
-    else
-    {
-      console.log("No yante answer adelem")
-    }
-      } 
-  const editAnswer = ( answer_id ) =>
-  {
-    localStorage.setItem( "answer_id", answer_id )
-    console.log( answer_id );
-    console.log("user_id "+ userId)
-}
-
-
-
+  
   return (
     <div>
       <LoginHeader logout={logout} />
@@ -155,8 +124,9 @@ console.log(answers)
             <h2> {userAndQuestion[0]?.question} </h2>
             <h3>{userAndQuestion[0]?.question_description} </h3>
           </div>
-        </div>
-        <div className="communityAnswer">
+              </div>
+              {/* below alfelgewum gn borderwun silemfelgew new yetewukut  */}
+         <div className="communityAnswer">
           <div className="h1">
             <h1>Answer From The Community</h1>
           </div>
@@ -175,24 +145,23 @@ console.log(answers)
                       <h3> {answer?.answer} </h3>
                     </div>
                     <div className="userAndAnswer_icons">
-                      <div className="userAndAnswer_Delete" onClick={ () => deleteAnswer(answer.answer_id, answer.user_id)}>
-                       { answer.user_id === userId ?  <DeleteIcon sx={{ color: "red" }} /> :<div className='userAndAnswer_Delete_arrow'> <ArrowForwardIosIcon /></div> }
+                      <div className="userAndAnswer_Delete">
+                        <DeleteIcon sx={{ color: "red" }} />
                       </div>
-                    <Link to={answer.user_id === userId && `/editAnswer`}>
-                      <div className="userAndAnswer_Edit" onClick={() => editAnswer(answer.answer_id)} >
-                     { answer.user_id === userId &&  <EditIcon sx={{ color: "green" }} /> }
-                      </div> 
-                    </Link>
+                      <div className="userAndAnswer_Edit">
+                        <EditIcon sx={{ color: "green" }} />
+                      </div>
                     </div>
+                    
                   </div>
                   
                 );
               })
             : ""}
-        </div>
+        </div> 
 
         <div className="answerPage_question">
-          <h1>Answer The Top Questions</h1>
+          { !value ? <h1> Answer The Top Questions</h1> : <h1>Edit Your Answer</h1>}
           <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
             <h3>Go to Question Page</h3>
           </Link>

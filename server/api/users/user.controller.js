@@ -1,6 +1,6 @@
 const pool = require( '../../config/database' );
-const bcrypt = require('bcrypt');
-const { register, userById, getUserByEmail, profile, getAllUsers, question, getquestions, answers, getanswer } = require( './user.service' )
+const bcrypt = require('bcryptjs');
+const { register, userById, getUserByEmail, profile, getAllUsers, question, getquestions, answers, getanswer, questionUpdate, deletQuestion, answerUpdate, deletAnswer } = require( './user.service' )
 const jwt = require( 'jsonwebtoken' );
 require( "dotenv" ).config();
 
@@ -63,15 +63,22 @@ module.exports = {
                       .status(500)
                       .json({ msg: "database connection eror" });
                   }
-                  pool.query( `SELECT user_id, user_name FROM registration WHERE user_email = ?`, [ email ], ( err, result ) =>
-                  {
-                    const token = jwt.sign({ id: result.user_id }, process.env.JWT_SECRET, {expiresIn: "2h" });
-                    return res.status(200).json({
-                      msg: "new user add successfully",
-                      token,
-                      user: result[0]
-                    });
-                  })
+                  pool.query(
+                    `SELECT user_id, user_name FROM registration WHERE user_email = ?`,
+                    [email],
+                    (err, result) => {
+                      const token = jwt.sign(
+                        { id: result.user_id },
+                        process.env.JWT_SECRET,
+                        { expiresIn: "2h" }
+                      );
+                      return res.status(200).json({
+                        msg: "new user add successfully",
+                        token,
+                        user: result[0]
+                      });
+                    }
+                  );
                 });
               }
             );
@@ -93,9 +100,8 @@ module.exports = {
     // const id = req.params.id;
     // console.log( "id ===>", id, "user===>", req.id );
     userById(req.id, (err, results) => {
-      if ( err )
-      {
-        console.log("the error is here")
+      if (err) {
+        console.log("the error is here");
         console.log(err);
         return res.status(500).json({ msg: "database connection error" });
       }
@@ -108,38 +114,45 @@ module.exports = {
 
   login: (req, res) => {
     const { email, password } = req.body;
-    console.log([email, password]);  
+    console.log([email, password]);
     //validation
     if (!email || !password) {
       return res.status(400).json({ msg: "Not all fields have been provided" });
     }
-    getUserByEmail(email, (err, results) => {
+    getUserByEmail(email, async (err, results) => {
       if (err) {
         console.log(err);
         res.status(500).json({ msg: "database connetion error" });
       }
       if (!results) {
-        return res
-          .status(404)
-          .json({ msg: "no account with this email has been registered" });
+        return res.json({
+          msg: "no account with this email has been registered"
+        });
       }
       //results.user_password: ke database yemetaw
+      console.log("see below the Password from database ");
       console.log(results.user__password);
-      const isMatch = bcrypt.compare( password.toString(), results.user__password );
-      
+      const isMatch = await bcrypt.compare(
+        password.toString(),
+        results.user__password
+      );
+      console.log("see isMatch below ");
+      console.log(isMatch);
       if (!isMatch) {
         console.log("error 2");
-        return res.status(404).json({ msg: "Invalide Credentials" });
+        return res.json({ msg: "Invalid Pssword" });
       }
       //token: automatically generate yemedereg json web token new
-      const token = jwt.sign({ id: results.user_id }, process.env.JWT_SECRET, {expiresIn: "2h"
+      const token = jwt.sign({ id: results.user_id }, process.env.JWT_SECRET, {
+        expiresIn: "2h"
       });
       console.log(token);
       return res.json({
         token,
         user: {
           user_id: results.user_id,
-          user_name: results.user_name // welecome ayfo yemebalew bezeh grape tedergo new
+          user_name: results.user_name, // welecome ayfo yemebalew bezeh grape tedergo new
+          email: email
         }
       });
     });
@@ -149,7 +162,8 @@ module.exports = {
     //  const { myQuestion, question_description } = req.body;
     //  console.log("this is inside question")
     //  console.log( req.body );
-    const userId = req.body.user.user_id;
+    console.log("ys ayfo berta ");
+    const userId = req.body.user;
     const myQuestion = req.body.myQuestion;
     const question_description = req.body.question_description;
     console.log({ userId, myQuestion, question_description });
@@ -165,13 +179,80 @@ module.exports = {
     });
   },
 
+  editQuestion: (req, res) => {
+    console.log("updated ");
+    console.log(req.body);
+    const questionId = req.body.questionId;
+    const userId = req.body.user;
+    const myQuestion = req.body.myQuestion;
+    const question_description = req.body.question_description;
+    questionUpdate(
+      { questionId, myQuestion, question_description },
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ msg: "database connection eror" });
+        }
+        console.log("edited ayfo");
+        return res.status(200).json({
+          msg: "new question updated successfully",
+          data: result
+        });
+      }
+    );
+  },
 
-  submitAnswer: ( req, res ) =>
-  {
-    const userId = req.body.user.user_id;
+  editAnswer: (req, res) => {
+    console.log("Edit Answer ");
+    console.log(req.body);
+    const answer = req.body.answer;
+    const answerId = req.body.answerId;
+
+    answerUpdate({ answer, answerId }, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ msg: "database connection eror" });
+      }
+      console.log("answer edited ayfo");
+      return res.status(200).json({
+        msg: "answer updated successfully",
+        data: result
+      });
+    });
+  },
+
+  deleteQuestion: (req, res) => {
+    let question_id = req.params.question_id;
+    deletQuestion({ question_id }, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ msg: "database connection eror" });
+      }
+      return res.status(200).json({
+        msg: "question Deleted",
+        data: result
+      });
+    });
+  },
+  deleteAnswer: (req, res) => {
+    let answer_id = req.params.answer_id;
+    console.log("see the answer id "  + answer_id )
+    deletAnswer({ answer_id }, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ msg: "database connection eror" });
+      }
+      return res.status(200).json({
+        msg: "Answer Deleted",
+        data: result
+      });
+    });   
+  },
+  submitAnswer: (req, res) => {
+    const userId = req.body.user;
     const answer = req.body.answer;
     const questionId = req.body.questionId;
-    console.log("your body content")
+    console.log("your body content");
     console.log(req.body);
     answers({ userId, answer, questionId }, (err, result) => {
       if (err) {
@@ -183,28 +264,26 @@ module.exports = {
         data: result
       });
     });
-},
-  
+  },
 
-  getQuestions: ( req, res ) =>
-  {
-     getquestions((err, results) => {
+  getQuestions: (req, res) => {
+    getquestions((err, results) => {
       if (err) {
         console.log(err).status(500).json({ msg: "database connection error" });
       }
       return res.status(200).json({ data: results });
     });
   },
-  getAnswer: ( req, res ) =>
-  {
-     getanswer((err, results) => {
+  getAnswer: (req, res) => {
+    console.log("yes ayfo refresh sitareg dershalew");
+    getanswer((err, results) => {
       if (err) {
         console.log(err).status(500).json({ msg: "database connection error" });
       }
       return res.status(200).json({ data: results });
     });
   }
-  };
+};
 
 
 

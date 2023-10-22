@@ -73,4 +73,22 @@ form{
 
 .userAndAnswer{
     display: flex;
+    border-bottom: 1px solid black;
+}
+.userAndAnswer_answer{
+    flex-grow: 1
+}
+.userAndAnswer_icons{
+    margin-left: 40px;
+}
+.userAndAnswer_Delete{
+ margin-top: 10px;
+  cursor: pointer;
+}
+.userAndAnswer_Edit{
+ cursor: pointer;
+  margin-top: 25px;
+}
+.userAndAnswer_Delete_arrow{
+    margin-top: 48px;
 }

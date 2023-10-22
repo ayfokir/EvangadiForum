@@ -3,8 +3,12 @@ import './Question.css'
 import axios from 'axios'
 import { userContext } from '../../Context/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
-function Question ()
+function Question ({value})
 { 
+    
+    let questionId = localStorage.getItem("question_id");
+    console.log(questionId);
+  console.log(value)
   const [ userData, setUserData ] = useContext( userContext );
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -15,40 +19,80 @@ function Question ()
   {
     setForm({ ...form, [e.target.name]: [e.target.value] });
   }
-  const handleSubmit = (e) =>  
+  const handleSubmit = (e) =>    
   {
     e.preventDefault();  
-      try
+    document.getElementById("textArea").focus();
+    if ( form.myQuestion || form.question_description) 
+    {
+      if ( value && localStorage.getItem( "user_id" ) )
       {
-        console.log( form )  
-        console.log("hi man inside submit")  
-    axios
-      .post(`http://localhost:5000/api/users/question/${userData.token}`, {
-        myQuestion: form.myQuestion,
-        question_description: form.question_description,
-        user: userData.user
-      })
-      .then( ( response ) =>
-      {
-      
-        navigate("/")
-        console.log( response );
-
-      } );
-      }  
-        
-        catch ( err )
+        try
         {
-            // console.log( "problem", err.response.data.msg )
-            console.log( "problem is happen" )
-            console.log(err)
-            // alert(err.response.data.msg)    
+          console.log( form )  
+          console.log("hi man inside submit")  
+      axios
+        .post(`http://localhost:5000/api/users/question/${localStorage.getItem("auth-token")}`, {
+          myQuestion: form.myQuestion,
+          question_description: form.question_description,
+          user: localStorage.getItem( "user_id" ),
+        })
+        .then( ( response ) =>
+        {
+        
+          navigate("/")
+          console.log( response );
+  
+        } );
+        }  
+          catch ( err )
+          {
+              // console.log( "problem", err.response.data.msg )
+              console.log( "problem is happen" )
+              console.log(err)
+              // alert(err.response.data.msg)    
         }
-  } 
-
+        }
+    } 
+    // below is used to edit Question
+    
+      if ( form.myQuestion || form.question_description )
+      {
+        if ( !value && localStorage.getItem( "question_id" ) )
+        {
+        try
+        {
+          console.log( form )  
+          console.log("hi man inside submit")  
+      axios
+        .post(`http://localhost:5000/api/users/editQuestion/${localStorage.getItem("auth-token")}`, {
+          myQuestion: form.myQuestion,
+          question_description: form.question_description,
+          user: localStorage.getItem( "user_id" ),
+          questionId: localStorage.getItem("question_id")
+        })
+        .then( ( response ) =>
+        {
+          console.log("see updated response ")
+        console.log(response)
+          navigate("/")
+          console.log( response );
+  
+        } );
+        }  
+          catch ( err )
+          {
+              // console.log( "problem", err.response.data.msg )
+              console.log( "problem is happen" )
+              console.log(err)
+              // alert(err.response.data.msg)    
+        }
+        }
+    }  
+    }  
   useEffect(() => {
-    if (!userData.user) navigate("/login");
-  }, [userData.user, navigate]);
+    if (!localStorage.getItem("auth-token")) navigate("/login");
+  });
 
 useEffect(() => {
   document.getElementById("textArea").focus();
@@ -64,19 +108,19 @@ useEffect(() => {
           <li>Descripe what you tried and what you expected to happen</li>
           <li>Review your question and post it to the site</li>
         </ul>
-        <h1>Ask Public Question</h1>
+         {value ? <h1>Ask Public Question </h1> :  <h1>Edit Your Question </h1> }
         <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
           <h4>Go to Question Page</h4>
         </Link>
       </div>
 
-      <form onSubmit={handleSubmit} className="inputarea" id='questionForm'>
+      <form onSubmit={handleSubmit} className="inputarea" id="questionForm">
         <input
           className="inputarea__title"
           type="text"
           name="myQuestion"
           placeholder="Title"
-          id='textArea'
+          id="textArea"
           onChange={handleChange}
         />
         <textarea

@@ -26,7 +26,7 @@ function LoginHeader ( {  logout, focus } )
         <h3>How it Works</h3>
 
         <div>
-              { userData.token ?   <Link to = {"/login"} ><button onClick= { logout } className="header__signin__button"> Log Out </button> </Link>   :
+              { localStorage.getItem("auth-token") ?   <Link to = {"/login"} ><button onClick= { logout } className="header__signin__button"> Log Out </button> </Link>   :
             <button onClick={ () => { signIn(); focus()}} className="header__signin__button"> Sign In </button> }
         </div> 
 

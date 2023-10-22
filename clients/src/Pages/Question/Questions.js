@@ -10,7 +10,7 @@ function Questions ( { logout } )
         <>
           <LoginHeader logout = {logout} />
         <div>
-         <Question />
+          <Question value={true} />
         </div>
         <Footer />
         </>
