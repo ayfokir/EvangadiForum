@@ -5,8 +5,10 @@ import LoginHeader from '../Login/LoginHeader';
 import './Home.css'
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import PersonIcon from "@mui/icons-material/Person";
+// import PersonIcon from "@mui/icons-material/Person";
+import PersonIcon from "@mui/icons-material/PersonOutline";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { IconButton } from '@mui/material';
 function Home ({logout})
 {
   
@@ -101,7 +103,7 @@ function Home ({logout})
                   onClick={() => handleClick(emailAndQuestion?.question_id)}
                 >
                   <div className="user">
-                    <PersonIcon sx={{ fontSize: 100 }} />
+                    <PersonIcon color="disabled" sx={{ fontSize: 100 }} />
                     <h5 className="userandquestion__email">
                       {emailAndQuestion?.user_email}
                     </h5>
@@ -113,7 +115,10 @@ function Home ({logout})
                         }
                       >
                         {emailAndQuestion.user_id === userId ? (
-                          <DeleteIcon sx={{ color: "red" }} />
+                          <IconButton>
+                            {" "}
+                            <DeleteIcon sx={{ color: "#222" }} />
+                          </IconButton>
                         ) : (
                           <div className="arrowForward_child">
                             {" "}
@@ -124,7 +129,9 @@ function Home ({logout})
                       <Link to={emailAndQuestion.user_id === userId && `/edit`}>
                         <div className="edit">
                           {emailAndQuestion.user_id === userId ? (
-                            <EditIcon sx={{ color: "green" }} />
+                            <IconButton>
+                              <EditIcon sx={{ color: "#222" }} />
+                            </IconButton>
                           ) : (
                             ""
                           )}

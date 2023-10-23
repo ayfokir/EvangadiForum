@@ -13,6 +13,8 @@
 
 .inputarea__title, .inputarea__description{
     width: 60%;
+     border: 1.9px solid rgba(0, 0, 0, .3);
+     border-radius: 4px;
 }
 
 .inputarea__description{
@@ -23,11 +25,16 @@
 .inputarea__title{
     height: 30px;
 }
-
+.questionPart_heading{
+    margin-bottom: 0;
+    padding-top: 80px;
+}
 .postQuestion{
     margin-top: 50px;
-    background-color: dodgerblue;
-    border: none;
-    height: 30px;
-    cursor: pointer;
+   height: 35px;
+ width: 160px;
+    background-color:  #0D6EFD;
+    border: 1px solid #0D6EFD;
+    border-radius: 5px;
+    color: white;
 }

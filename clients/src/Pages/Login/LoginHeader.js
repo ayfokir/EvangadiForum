@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import { userContext } from '../../Context/UserContext';
 function LoginHeader ( {  logout, focus } )
 {
-
+  let userId = localStorage.getItem( "user_id" );
   const [ userData, setUserData ] = useContext( userContext );  
   
     const signIn = () => {
@@ -21,7 +21,7 @@ function LoginHeader ( {  logout, focus } )
       });
     };
   return (  
-    <div className="header">
+    <div className= "header"   >
       <Link to={ "/" }><img className='header_headerimage' src={ logo } /></Link>
       {/* <h1>Q and A</h1> */}
       <div className="header__signin">     

@@ -108,10 +108,13 @@ useEffect(() => {
           <li>Descripe what you tried and what you expected to happen</li>
           <li>Review your question and post it to the site</li>
         </ul>
-         {value ? <h1>Ask Public Question </h1> :  <h1>Edit Your Question </h1> }
-        <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
-          <h4>Go to Question Page</h4>
-        </Link>
+
+        <div className="questionPart_heading">
+          {value ? <h1>Ask Public Question </h1> : <h1>Edit Your Question </h1>}
+          <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
+            <ul>Go to Question Page</ul>
+          </Link>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="inputarea" id="questionForm">

@@ -5,7 +5,7 @@ import { userContext } from '../../Context/UserContext';
 import axios from 'axios';
 import './Answer.css'
 import { Link,  useNavigate} from 'react-router-dom';
-import PersonIcon from "@mui/icons-material/Person";
+import PersonIcon from "@mui/icons-material/PersonOutline";
 import Question from './../Question/Question';
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -161,7 +161,7 @@ console.log(answers)
           <div>
             <h1>Question?</h1>
             <h2> {userAndQuestion[0]?.question} </h2>
-            <h3>{userAndQuestion[0]?.question_description} </h3>
+            <ul>{userAndQuestion[0]?.question_description} </ul>
           </div>
         </div>
         <div className="communityAnswer">
@@ -171,9 +171,9 @@ console.log(answers)
           {displayAnswer
             ? answers?.map((answer) => {
                 return (
-                  <div className="userAndAnswer" >
+                  <div className="userAndAnswer">
                     <div className="user">
-                      <PersonIcon sx={{ fontSize: 100 }} />
+                      <PersonIcon color="disabled" sx={{ fontSize: 100 }} />
                       <h5 className="userandquestion__email">
                         {answer.user_email}
                       </h5>
@@ -183,17 +183,33 @@ console.log(answers)
                       <h3> {answer?.answer} </h3>
                     </div>
                     <div className="userAndAnswer_icons">
-                      <div className="userAndAnswer_Delete" onClick={ () => deleteAnswer(answer.answer_id, answer.user_id)}>
-                       { answer.user_id === userId ?  <DeleteIcon sx={{ color: "red" }} /> :<div className='userAndAnswer_Delete_arrow'> <ArrowForwardIosIcon /></div> }
+                      <div
+                        className="userAndAnswer_Delete"
+                        onClick={() =>
+                          deleteAnswer(answer.answer_id, answer.user_id)
+                        }
+                      >
+                        {answer.user_id === userId ? (
+                          <DeleteIcon sx={{ color: "red" }} />
+                        ) : (
+                          <div className="userAndAnswer_Delete_arrow">
+                            {" "}
+                            <ArrowForwardIosIcon  />
+                          </div>
+                        )}
                       </div>
-                    <Link to={answer.user_id === userId && `/editAnswer`}>
-                      <div className="userAndAnswer_Edit" onClick={() => editAnswer(answer.answer_id)} >
-                     { answer.user_id === userId &&  <EditIcon sx={{ color: "green" }} /> }
-                      </div> 
-                    </Link>
+                      <Link to={answer.user_id === userId && `/editAnswer`}>
+                        <div
+                          className="userAndAnswer_Edit"
+                          onClick={() => editAnswer(answer.answer_id)}
+                        >
+                          {answer.user_id === userId && (
+                            <EditIcon sx={{ color: "green" }} />
+                          )}
+                        </div>
+                      </Link>
                     </div>
                   </div>
-                  
                 );
               })
             : ""}
@@ -202,7 +218,7 @@ console.log(answers)
         <div className="answerPage_question">
           <h1>Answer The Top Questions</h1>
           <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
-            <h3>Go to Question Page</h3>
+            <ul>Go to Question Page</ul>
           </Link>
         </div>
         <form onSubmit={handleSubmit} id="answerForm">
