@@ -50,8 +50,10 @@ function Signup ()
                   token:response.data.token,
                   user: response.data.user}
                } );
-                localStorage.setItem("auth-token", response.data.token);
-            navigate("/"); // this is replace the useEffect function below use either of them. 
+                localStorage.setItem( "auth-token", response.data.token );
+                localStorage.setItem("user_name", response.data.user.user_name);
+                localStorage.setItem( "user_id", response.data.user.user_id );
+             // this is replace the useEffect function below use either of them. 
           });
       }
       }
@@ -61,6 +63,14 @@ function Signup ()
       console.log(err);
     }
   };
+
+    useEffect( () =>  
+    {
+      if ( localStorage.getItem( "auth-token" ) ) navigate( "/" );
+      console.log("not have token")
+    }  ) // you can remove navigate here
+      
+
 
   useEffect( () =>
   {

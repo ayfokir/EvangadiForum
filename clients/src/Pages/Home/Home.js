@@ -60,9 +60,6 @@ function Home ({logout})
  
   const deleteQuestion = ( question_id ) =>
   {
-    //     let questionId = localStorage.getItem("question_id");
-    //     questionId = parseInt(questionId);
-    //     console.log(questionId)
         let userId = localStorage.getItem("user_id");
         userId = parseInt(userId);
     console.log(question_id)
@@ -89,17 +86,16 @@ function Home ({logout})
         <Link to={"/ask-questions"}>
           <button className="homePage__askquestion"> Ask Question</button>
         </Link>
-        <h1> Welcome {localStorage.getItem("user_name")} </h1>
+        <h1> Welcome : {localStorage.getItem("user_name")} </h1>
       </div>
       <div className="parent">
-        <div>
+        <div className="parent_question">
           <h2>Questions</h2>
-          <hr />
         </div>
         <div>
           {userAndQuestion?.map((emailAndQuestion) => {
             return (
-              <div> 
+              <div>
                 <div
                   className="userandquestion"
                   onClick={() => handleClick(emailAndQuestion?.question_id)}
@@ -110,13 +106,29 @@ function Home ({logout})
                       {emailAndQuestion?.user_email}
                     </h5>
                     <div className="arrowForward">
-                      <div className="delete" onClick={ () =>  deleteQuestion(emailAndQuestion?.question_id)}>
-                       {emailAndQuestion.user_id === userId ?  <DeleteIcon sx={{ color: "red" }} /> : <div className='arrowForward_child'> <ArrowForwardIosIcon /> </div>}
+                      <div
+                        className="delete"
+                        onClick={() =>
+                          deleteQuestion(emailAndQuestion?.question_id)
+                        }
+                      >
+                        {emailAndQuestion.user_id === userId ? (
+                          <DeleteIcon sx={{ color: "red" }} />
+                        ) : (
+                          <div className="arrowForward_child">
+                            {" "}
+                            <ArrowForwardIosIcon />{" "}
+                          </div>
+                        )}
                       </div>
-                      <Link to={emailAndQuestion.user_id === userId && `/edit`} >
-                      <div className="edit">
-                          { emailAndQuestion.user_id === userId ?  <EditIcon sx={ { color: "green" } } /> : "" }
-                      </div>
+                      <Link to={emailAndQuestion.user_id === userId && `/edit`}>
+                        <div className="edit">
+                          {emailAndQuestion.user_id === userId ? (
+                            <EditIcon sx={{ color: "green" }} />
+                          ) : (
+                            ""
+                          )}
+                        </div>
                       </Link>
                     </div>
                   </div>

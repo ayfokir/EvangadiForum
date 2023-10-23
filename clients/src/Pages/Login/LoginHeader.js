@@ -1,6 +1,10 @@
 import React, { useContext, useState } from 'react'
 import './LoginHeader.css'
-import logo from './evangadiForum.png'  
+import logo from './evangadiForum.png'
+import QandA from './Q and A.png'  
+
+// import QandA from './QandA1.png'  
+ 
 import { Link } from 'react-router-dom'
 import { userContext } from '../../Context/UserContext';
 function LoginHeader ( {  logout, focus } )
@@ -18,7 +22,8 @@ function LoginHeader ( {  logout, focus } )
     };
   return (  
     <div className="header">
-      <Link to = {"/"}><img src={logo} /></Link>
+      <Link to={ "/" }><img className='header_headerimage' src={ logo } /></Link>
+      {/* <h1>Q and A</h1> */}
       <div className="header__signin">     
         <Link to = {"/"} style={{textDecoration: "none", color: "black"}}  >
           <h3 >Home</h3>  

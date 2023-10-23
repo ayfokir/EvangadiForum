@@ -144,7 +144,7 @@ module.exports = {
       }
       //token: automatically generate yemedereg json web token new
       const token = jwt.sign({ id: results.user_id }, process.env.JWT_SECRET, {
-        expiresIn: "2h"
+        expiresIn: "72h"
       });
       console.log(token);
       return res.json({
@@ -186,9 +186,22 @@ module.exports = {
     const userId = req.body.user;
     const myQuestion = req.body.myQuestion;
     const question_description = req.body.question_description;
+
+//     ResultSetHeader {
+//   fieldCount: 0,
+//   affectedRows: 1,
+//   insertId: 0,
+//   info: 'Rows matched: 1  Changed: 0  Warnings: 0',
+//   serverStatus: 2,
+//   warningStatus: 0,
+//   changedRows: 0
+// }
     questionUpdate(
       { questionId, myQuestion, question_description },
-      (err, result) => {
+      ( err, result ) =>
+      {
+        console.log( "below is the result when you edit " )
+        console.log(result)
         if (err) {
           console.log(err);
           return res.status(500).json({ msg: "database connection eror" });
@@ -196,11 +209,12 @@ module.exports = {
         console.log("edited ayfo");
         return res.status(200).json({
           msg: "new question updated successfully",
-          data: result
+
         });
       }
     );
   },
+
 
   editAnswer: (req, res) => {
     console.log("Edit Answer ");
@@ -229,11 +243,12 @@ module.exports = {
         return res.status(500).json({ msg: "database connection eror" });
       }
       return res.status(200).json({
-        msg: "question Deleted",
+        msg: "Question  and Answer Deleted ",
         data: result
       });
     });
   },
+  
   deleteAnswer: (req, res) => {
     let answer_id = req.params.answer_id;
     console.log("see the answer id "  + answer_id )

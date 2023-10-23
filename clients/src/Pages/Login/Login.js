@@ -77,7 +77,7 @@ function Login ()
                 setPasswordError( response.data.msg );
                 return;
                 }
-                      //set localStorage with the token 
+                //set localStorage with the token 
                 localStorage.setItem( "auth-token", response.data.token );
                 localStorage.setItem("user_name", response.data.user.user_name);
                 localStorage.setItem( "user_id", response.data.user.user_id );
@@ -137,6 +137,7 @@ function Login ()
       <>  
         <LoginHeader focus = {() => document.getElementById("email").focus() } />  
         <div className="superParent">
+          
           {userData.value1 && userData.value2 ? ( 
             <Signup />
           ) : (  

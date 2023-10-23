@@ -6,16 +6,17 @@
 }
 .answerPage{
     background-color: whitesmoke;
-    width: 1500px;
-    margin: 0 auto;
-   box-shadow: 5px 5px  rgba(0,0,0,0.2); 
+    /* width: 1500px;
+    margin: 0 auto; */
+    box-shadow: 5px 5px  rgba(0,0,0,0.2); 
 }
  .question{
     align-self: flex-start;
     margin-left: 350px;
  }
 .communityAnswer{
-    max-width: 810px;
+     /* border-top: 1px solid black; */
+     margin-top: 16px;
 }
  .question h2 {
     margin: 0;
@@ -36,21 +37,16 @@
     flex-direction: column;
     align-items: center;
 }
-form{
+#answerForm{
     margin-top: 40px;
 }
- /* .question{
- border: none; 
- border-bottom: 1px solid black;  
- width: 800px;
- padding-top: 60px;
- text-align: center;
-
-}  */
+  .question{
+  padding-left: 204px;
+}  
  .h1{
  border: none; 
  border-bottom: 1px solid black;  
- width: 800px;
+ /* width: 800px; */
  padding-top: 60px;
  text-align: center;
 
@@ -69,6 +65,9 @@ form{
     border: none;
     margin-bottom: 8px;
     cursor: pointer;
+}
+.answerPage_question{
+    margin-top: 50px;
 }
 
 .userAndAnswer{
@@ -91,4 +90,9 @@ form{
 }
 .userAndAnswer_Delete_arrow{
     margin-top: 48px;
-}
+}  
+
+
+
+
+

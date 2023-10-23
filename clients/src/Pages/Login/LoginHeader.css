@@ -1,28 +1,37 @@
 .header{
     display: flex;
-    justify-content: space-between;
-    width: 1000px;
+    justify-content: space-around;
+    /* width: 1000px; */
     margin: 0 auto;
+    /* background-color: rgba(0,0,0,0.2); */
+    /* box-shadow: 10px 10px 5px whitesmoke; */
+    margin-bottom: 25px;
 }
+
 .header img{
     width: 200px;
+    /* padding: 8px; */
+    height: 100px;
+    /* margin-top: 10px; */
 }
 
 .header__signin{
     display: flex;
     cursor: pointer;
-}
-
+} 
 .header__signin__button{
 cursor: pointer;
+;
 }
 
 .header__signin h3, .header__signin button{
     margin: 28px;
 }
 .header__signin button{
-    width: 150px;
-    height: 30px;
-    background-color:  dodgerblue;
-    border: 1px solid dodgerblue;
+height: 35px;
+ width: 160px;
+    background-color:  #0D6EFD;
+    border: 1px solid #0D6EFD;
+    border-radius: 5px;
+    color: white;
 }

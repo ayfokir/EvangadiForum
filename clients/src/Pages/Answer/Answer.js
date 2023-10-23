@@ -94,15 +94,23 @@ console.log(answers)
             user: localStorage.getItem("user_id"),
             questionId: localStorage.getItem("question_id")
           })
-          .then((response) => {
-            setTester( true );
+          .then( ( response ) =>
+          {
+            if ( tester )
+            {
+              setTester( false );
+            }
+            else
+            {
+              setTester(true)
+            }
             document.getElementById("answerForm").reset();
           });
       } catch (err) {
         console.log("Error from PostAnswer");
         console.log(err);
      
-      }
+      }    
     }
 
   };

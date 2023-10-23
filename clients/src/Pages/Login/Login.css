@@ -1,7 +1,8 @@
  .superParent{
-    /* background-image: url('./evangadiForum.jpg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat; */
+     background-image: url('./bg-svg-f.svg');
+    /* background-size: 100% 100%; */
+    background-repeat: no-repeat;  
+    background-size: cover;
    background-color: whitesmoke;
    padding: 100px;
 } 
@@ -12,38 +13,47 @@
 }
 .superParent__description {
   width: 600px;
+  margin-left: 15px;
 }
 .superParent__signinPage{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 500px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     background-color: white;
     margin-right: 25px;
-   box-shadow: 0px 0px 4px 4px whitesmoke;
-   padding: 10px;
+    box-shadow: 10px 10px 5px  rgba(0,0,0,0.04);
+    padding: 60px;
 }
 .emailInput, .passwordInput{
     margin-bottom: 9px;
     padding: 10px;
     border-radius: 5px;
+    border: 1.9px solid rgba(0, 0, 0, .3);
+    width: 400px;
+    height: 20px;
 }
 .superParent__signinPage__marginTop{
-margin-top: 20px;
-margin-left: 32px;
+/* margin-top: 20px; */
+/* margin-left: 20px; */
 margin-bottom: 9px;
-    background-color: orange;
-    border: 1px solid orange;
+    background-color: #ff8500;
+    border: 1px solid #ff8500;
     padding: 6px;
     width: 130px;
+    border-radius: 4px;
     cursor: pointer;
+    color: white;
 }
 .superParent__description__button{
     width: 130px;
     padding: 5px;
-    background-color: orange;
-    border: 1px solid orange;
+    background-color: #ff8500;
+    border: 1px solid #ff8500;
+    border-radius: 4px;
+    color: white;
+
 }
 
 .validation-error{

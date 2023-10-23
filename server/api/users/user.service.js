@@ -76,6 +76,8 @@ module.exports = {
           );  
         }
   },
+
+  
   answerUpdate: ( data, callback ) =>
   {
     console.log("the dat is " + data)
@@ -95,19 +97,57 @@ module.exports = {
   deletQuestion: ( data, callback) =>
   {
     console.log( "delete sitareg" )
-    console.log(data)
-   pool.query(
-      `DELETE FROM  question WHERE question_id = '${data.question_id}' `,
-      (err, result) => {
-        console.log(result);
-        if (err) {
-          return callback(err);
-        }
-        return callback(null, result);
-      }
-    );
+    console.log( data )
+    let sql = `SELECT * FROM answer  WHERE question_id = (?)`
+    let answer = pool.query( sql, [ data.question_id ], ( err, result ) =>
+    {
+      console.log( "see the sresult" );
+      console.log( result )
+      console.log(Boolean(result[0]))
+     if (result[0])
+     {
+        //  `DELETE  FROM answer, question USING  answer JOIN question ON question.question_id = answer.question_id WHERE question.question_id = '${data.question_id}' `;
+       for ( let i = 0; i < result.length; i++ )
+       {
+         pool.query(
+            `DELETE  FROM answer WHERE answer.question_id = '${data.question_id}' `,
+            (err, result) => {
+              console.log("All Answer deleted man");
+              if (err) {
+                return callback(err);
+              }
+              return callback(null, " Answer Deleted");
+            }
+          ); 
+       }
+        pool.query(
+          `DELETE FROM  question  WHERE question.question_id = '${data.question_id}' `,
+          (err, result) => {
+            console.log("question deleted man after answer is deleted");
+            if (err) {
+              return callback(err);
+            }
+            return callback(null, " Only question  Deleted");
+          }
+       );
+     }
+     if (!result[0])
+     {
+       pool.query(
+          `DELETE FROM  question  WHERE question.question_id = '${data.question_id}' `,
+          (err, result) => {
+            console.log("Only question Deleted");
+            if (err) {
+              return callback(err);
+            }
+            return callback(null, " Only question  Deleted");
+          }
+       );
+     }
+   } );
+    // answer = answer[ 0 ].answer_id
+    // console.log( answer );
   },
-  
   deletAnswer: ( data, callback) =>
   {
     console.log( "delete the answer" )
