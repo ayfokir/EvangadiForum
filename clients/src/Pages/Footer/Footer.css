@@ -7,31 +7,40 @@
    margin-top: 19px;
 }
 
+.FooterPart1{
+    margin-top: 45px;
+}
 .FooterPart1__facbooklogo{
 width: 25px;
-margin: 8px;
+margin-right: 40px;
 
+}
+.FooterPart1_logo{
+    margin-top: 2px;
 }
 
 .FooterPart1__instagramlogo{
     width: 20px;
-    margin: 8px;
+    margin-right: 40px;
 }
 .FooterPart1__youtubelogo{
     width: 20px;
-    margin: 8px;
+    margin-top: 8px;
 }
 
 .FooterPart2 li, .FooterPart3 li{
 list-style: none;
 padding: 8px;
 }
+.FooterPart2{
+    margin-top: 20px;
+}
 .FooterPart3{
     display: flex;
 
 }
 .FooterPart3{
-    margin-top: -18px;
+    margin-top: -1px;
 }
 
 .Footer .logo{

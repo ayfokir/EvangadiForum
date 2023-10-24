@@ -84,19 +84,18 @@ function Signup ()
       ) : (
         <div className="signupPage">
           <div>
-            <h1>Join The Network</h1>
+            <h1 className='joinNetwork'>Join The Network</h1>
             <h3>
-              Already Have an Account? <Link onClick={signin}>Sign in</Link>
+              Already Have an Account? <Link onClick={signin} className="changeColor">Sign in</Link>
             </h3>
           </div>
-
           <form onSubmit={handleSubmit}>
             <div className="signupPage__userData">
               <input
-                className="email "  
+                className="email "
                 type="text"
-                  name="email"
-                  id='email'
+                name="email"
+                id="email"
                 placeholder="Email"
                 onChange={handleChange}
               />
@@ -109,15 +108,14 @@ function Signup ()
                 name="firstName"
                 placeholder="FirstName"
                 onChange={handleChange}
-                /> 
+              />
               <input
                 className=" lastName "
                 type="text"
                 name="lastName"
                 placeholder="LastName"
                 onChange={handleChange}
-                />
-                
+              />
             </div>
             <div className="signupPage__userData">
               <input
@@ -129,8 +127,8 @@ function Signup ()
               />
             </div>
             <div className="signupPage__userData">
-                <input
-                  className='password'
+              <input
+                className="password"
                 type="password"
                 name="password"
                 placeholder="password"
@@ -141,11 +139,11 @@ function Signup ()
           </form>
 
           <p>
-            I agree to the <Link>Privacy Policy</Link> and{" "}
-            <Link>terms of Service</Link>{" "}
+            I agree to the <Link className="changeColor">Privacy Policy</Link>{" "}
+            and <Link className="changeColor">terms of Service</Link>{" "}
           </p>
 
-          <Link> Already Have an Account</Link>
+          <Link className="changeColor"> Already Have an Account</Link>
         </div>
       )}
     </>

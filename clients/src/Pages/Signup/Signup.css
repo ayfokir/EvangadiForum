@@ -13,19 +13,22 @@
     width: 500px;
     
 }
-
+.signupPage .joinNetwork {
+    font-weight: 600;
+}
 .lastName{
 margin-left: 8px;
 }
 .agreeandJoin{ 
     width: 150px;
-    height: 30px;
+    height: 40px;
     background-color:  #0D6EFD;
     border: 1px solid #0D6EFD;
     border-radius: 5px;
     color: white;
     width: 400px;
     margin-top: 8px;
+    font-size: 16px;
 }
 .signupPage__userData{
     padding: 7px;

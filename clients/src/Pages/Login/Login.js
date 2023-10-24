@@ -142,10 +142,10 @@ function Login ()
             <Signup />
           ) : (  
             <div className="superParent__signinPage" id="signinPage">
-              <h1>Login to Your Account</h1>
+              <h1 className='Loginto'>Login to Your Account</h1>
               <h3>
                 Don't Have an Account ? &nbsp;  
-                <Link onClick={creatAccount}>Create a new account</Link>
+                <Link onClick={creatAccount} className='changeColor'>Create a new account</Link>
               </h3>
                 <form onSubmit={ handleSubmit }>
                 {serverError && <div className="validation-error" role="alert">{serverError}</div>}
@@ -172,7 +172,7 @@ function Login ()
                Sign in
                 </button>
               </form>
-              <Link onClick={creatAccount}  >Create a new account</Link>
+              <Link onClick={creatAccount} className='changeColor' >Create a new account</Link>
             </div>
           )}
 

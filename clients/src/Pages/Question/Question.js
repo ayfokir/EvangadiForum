@@ -101,7 +101,7 @@ useEffect(() => {
   return (
     <div>
       <div className="questionPart">
-        <h1>Steps to Write a good question</h1>
+        <h1 className='steps'>Steps to Write a good question</h1>
         <ul>
           <li>Summerize your Problem in one line title</li>
           <li>Descripe your problem in more detail</li>
@@ -110,7 +110,7 @@ useEffect(() => {
         </ul>
 
         <div className="questionPart_heading">
-          {value ? <h1>Ask Public Question </h1> : <h1>Edit Your Question </h1>}
+          {value ? <h1 className='steps'>Ask Public Question </h1> : <h1 className='steps'>Edit Your Question </h1>}
           <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
             <ul>Go to Question Page</ul>
           </Link>
@@ -130,7 +130,7 @@ useEffect(() => {
           className="inputarea__description"
           type=" text"
           name="question_description"
-          placeholder="Question Description"
+          placeholder="Question Description..."
           onChange={handleChange}
         />
 

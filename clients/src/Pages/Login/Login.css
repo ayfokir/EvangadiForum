@@ -7,6 +7,9 @@
    padding: 100px;
    margin-top: -24px;
 } 
+.changeColor{
+    color: #ff8500;
+}
 
 .superParent{
     display: flex;
@@ -15,6 +18,7 @@
 .superParent__description {
   width: 600px;
   margin-left: 15px;
+ 
 }
 .superParent__signinPage{
     display: flex;
@@ -26,6 +30,10 @@
     margin-right: 25px;
     box-shadow: 10px 10px 5px  rgba(0,0,0,0.04);
     padding: 60px;
+}
+.superParent__signinPage .Loginto{
+    font-weight: 600;
+    
 }
 .emailInput, .passwordInput{
     margin-bottom: 9px;

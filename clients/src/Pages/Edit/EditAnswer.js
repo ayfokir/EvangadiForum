@@ -4,6 +4,7 @@ import Footer from '../Footer/Footer'
 import { userContext } from '../../Context/UserContext';
 import axios from 'axios';
 import '../Answer/Answer.css'
+import './EditAnswer.css'
 import { Link,  useNavigate} from 'react-router-dom';
 import PersonIcon from "@mui/icons-material/Person";
 import Question from './../Question/Question';
@@ -118,22 +119,22 @@ console.log(answers)
     <div>
       <LoginHeader logout={logout} />
       <div className="answerPage">
-        <div className="question">
+        <div className="question correctMargin">
           <div>
-            <h1>Question?</h1>
-            <h2> {userAndQuestion[0]?.question} </h2>
-            <h3>{userAndQuestion[0]?.question_description} </h3>
+            <h1 className="correctWeight">Question?</h1>
+            <h2 className='editQuestion'> {userAndQuestion[0]?.question} </h2>
+            <h3 className='editQuestionDescription'>{userAndQuestion[0]?.question_description} </h3>
           </div>
-              </div>
-              {/* below alfelgewum gn borderwun silemfelgew new yetewukut  */}
-         <div className="communityAnswer">
+        </div>
+        {/* below alfelgewum gn borderwun silemfelgew new yetewukut  */}
+        <div className="communityAnswer">
           <div className="h1">
-            <h1>Answer From The Community</h1>
+            <h1 className="correctWeight">Answer From The Community</h1>
           </div>
           {displayAnswer
             ? answers?.map((answer) => {
                 return (
-                  <div className="userAndAnswer" >
+                  <div className="userAndAnswer">
                     <div className="user">
                       <PersonIcon sx={{ fontSize: 100 }} />
                       <h5 className="userandquestion__email">
@@ -152,18 +153,20 @@ console.log(answers)
                         <EditIcon sx={{ color: "green" }} />
                       </div>
                     </div>
-                    
                   </div>
-                  
                 );
               })
             : ""}
-        </div> 
+        </div>
 
         <div className="answerPage_question">
-          { !value ? <h1> Answer The Top Questions</h1> : <h1>Edit Your Answer</h1>}
+          {!value ? (
+            <h1 className="correctWeight"> Answer The Top Questions</h1>
+          ) : (
+            <h1 className="correctWeight">Edit Your Answer</h1>
+          )}
           <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
-            <h3>Go to Question Page</h3>
+            <ul>Go to Question Page</ul>
           </Link>
         </div>
         <form onSubmit={handleSubmit} id="answerForm">

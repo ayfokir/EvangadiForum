@@ -158,15 +158,15 @@ console.log(answers)
       <LoginHeader logout={logout} />
       <div className="answerPage">
         <div className="question">
-          <div>
-            <h1>Question?</h1>
-            <h2> {userAndQuestion[0]?.question} </h2>
-            <ul>{userAndQuestion[0]?.question_description} </ul>
+          <div className='correctMargin'>
+            <h1 className="correctWeight">Question?</h1>
+            <h2 className='questionandAnaswer'> {userAndQuestion[0]?.question} </h2>
+            <ul className='questionDescription'>{userAndQuestion[0]?.question_description} </ul>
           </div>
         </div>
         <div className="communityAnswer">
           <div className="h1">
-            <h1>Answer From The Community</h1>
+            <h1 className="correctWeight">Answer From The Community</h1>
           </div>
           {displayAnswer
             ? answers?.map((answer) => {
@@ -180,7 +180,7 @@ console.log(answers)
                       <div className="arrowForward"></div>
                     </div>
                     <div className="userAndAnswer_answer">
-                      <h3> {answer?.answer} </h3>
+                      <h3 className="answers"> {answer?.answer} </h3>
                     </div>
                     <div className="userAndAnswer_icons">
                       <div
@@ -190,11 +190,11 @@ console.log(answers)
                         }
                       >
                         {answer.user_id === userId ? (
-                          <DeleteIcon sx={{ color: "red" }} />
+                          <DeleteIcon sx={{ color: "#222" }} />
                         ) : (
                           <div className="userAndAnswer_Delete_arrow">
                             {" "}
-                            <ArrowForwardIosIcon  />
+                            <ArrowForwardIosIcon />
                           </div>
                         )}
                       </div>
@@ -204,7 +204,7 @@ console.log(answers)
                           onClick={() => editAnswer(answer.answer_id)}
                         >
                           {answer.user_id === userId && (
-                            <EditIcon sx={{ color: "green" }} />
+                            <EditIcon sx={{ color: "#222" }} />
                           )}
                         </div>
                       </Link>
@@ -216,7 +216,7 @@ console.log(answers)
         </div>
 
         <div className="answerPage_question">
-          <h1>Answer The Top Questions</h1>
+          <h1 className="correctWeight">Answer The Top Questions</h1>
           <Link to={"/"} style={{ textDecoration: "none", color: "black" }}>
             <ul>Go to Question Page</ul>
           </Link>
@@ -228,7 +228,7 @@ console.log(answers)
             name="answer"
             id="textArea"
             onChange={handleChange}
-            placeholder="Your Answer"
+            placeholder="Your Answer..."
           />
           <button className="postAnswer">Post Your Answer</button>
         </form>

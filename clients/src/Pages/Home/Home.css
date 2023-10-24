@@ -15,8 +15,14 @@ justify-content: space-around;
 }
 .homePage h1{
   margin-top: -16px;
-}
 
+}
+.parent .questions{
+  font-weight: 550;
+}
+.homePage .welcome {
+  font-weight: 550;
+}
 
 .parent {
   display: flex;
@@ -33,6 +39,10 @@ justify-content: space-around;
 }
 .userandquestion{
   display: flex;
+ 
+}
+.userandquestion__email, .userandquestion__question {
+font-weight: 500;
 }
 
 .user{

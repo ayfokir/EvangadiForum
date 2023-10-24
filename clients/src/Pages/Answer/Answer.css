@@ -10,9 +10,27 @@
     margin: 0 auto; */
     box-shadow: 5px 5px  rgba(0,0,0,0.2); 
 }
+.communityAnswer {
+    margin-right: 400px;
+}
+.correctMargin{
+    
+    margin-left: -200px;
+    
+}
+
+.answerPage .correctWeight{
+    font-weight: 500;
+}
+.answerPage .questionandAnaswer{
+    font-weight: 400;
+}
+.userAndAnswer_answer .answers{
+    font-weight: 500;
+}
  .question{
     align-self: flex-start;
-    margin-left: 350px;
+    margin-left: 358px;
  }
 .communityAnswer{
       border-top: 1.9px solid rgba(0, 0, 0, .3);
@@ -30,8 +48,12 @@
  .enterAnswe{
     height: 150px;
     width: 800px;
-       border: 1.9px solid rgba(0, 0, 0, .3);
+     border: 1.999px solid rgba(0, 0, 0, .2);
      border-radius: 4px;
+     padding: 10px;
+       padding-left: 20px;
+       border-radius: 6px;
+       font-size: 18px;
 }
 
  form{
@@ -45,6 +67,10 @@
   .question{
   padding-left: 204px;
 }  
+
+.questionDescription{
+    padding-left: 0;
+}
  .h1{
  border: none; 
 border-bottom: 1.9px solid rgba(0, 0, 0, .3); 
@@ -60,11 +86,13 @@ border-bottom: 1.9px solid rgba(0, 0, 0, .3);
 }
 
 .postAnswer{
-    margin-top: 25px;
-    width: 150px;
-    height: 30px;
-    background-color: dodgerblue;
-    border: none;
+     margin-top: 25px;
+     height: 35px;
+     width: 160px;
+    background-color:  #0D6EFD;
+    border: 1px solid #0D6EFD;
+    border-radius: 5px;
+    color: white;
     margin-bottom: 8px;
     cursor: pointer;
 }

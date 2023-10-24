@@ -19,7 +19,7 @@ const auth = ( req, res, next ) => // authenticate ketederege buhala "next" yeme
         }
             const verified = jwt.verify( token, process.env.JWT_SECRET );
             console.log("the verified id is"+ verified );
-            console.log( verified );
+            console.log( verified );  
             if ( !verified )
             {
                 return res.status( 401 ).json( { msg: "token verification failed, authorization denied." } );

@@ -1,8 +1,9 @@
 import React from 'react'
-import logo from './evangadi-logo-footer.webp'
+// import logo from './evangadi-logo-footer.webp'
 import facbook from './facebook-emblem.jpg'
 import instagram from './instagram.png'
 import youtube from './youtub.png'
+import logo from  "./evangadi-logo-footer.png"
 import './Footer.css'
 
 function Footer() {
@@ -10,12 +11,15 @@ function Footer() {
     
       <div className="Footer">
         <div className="FooterPart1">
-          <div>
-            <h1>Evangadi Network</h1>
-            <img className="FooterPart1__facbooklogo" src={facbook} />
-            <img className="FooterPart1__instagramlogo" src={instagram} />
-            <img className="FooterPart1__youtubelogo" src={youtube} />
-          </div>
+          
+          {/* <h1>Evangadi Network</h1> */ }
+          <div><img src= {logo} /></div>
+            <div className='FooterPart1_logo'>
+              <img className="FooterPart1__facbooklogo" src={facbook} />
+              <img className="FooterPart1__instagramlogo" src={instagram} />
+              <img className="FooterPart1__youtubelogo" src={youtube} />
+            </div>
+          
         </div>
 
         <div className="FooterPart2">
@@ -51,7 +55,7 @@ function Footer() {
               <li>+251-941-215-837</li>
             </a>
           </ul>
-          <img src={logo} className="logo" />
+     
         </div>
       </div>
       

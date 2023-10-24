@@ -88,11 +88,11 @@ function Home ({logout})
         <Link to={"/ask-questions"}>
           <button className="homePage__askquestion"> Ask Question</button>
         </Link>
-        <h1> Welcome : {localStorage.getItem("user_name")} </h1>
+        <h1 className='welcome'> Welcome : {localStorage.getItem("user_name")} </h1>
       </div>
       <div className="parent">
         <div className="parent_question">
-          <h2>Questions</h2>
+          <h2 className='questions'>Questions</h2>
         </div>
         <div>
           {userAndQuestion?.map((emailAndQuestion) => {
