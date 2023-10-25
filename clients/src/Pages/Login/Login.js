@@ -22,35 +22,61 @@ function Login ()
   console.log(form)
     const handleSubmit =  ( e ) =>
     {
+      console.log( "yes ayfo the man" )
+      // console.log(form?.password[0])
+       setServerError( "" );
       e.preventDefault();
       if ( !form.email )
       {
         setEmailError( "Email Required" )
         return;
+      }    
+      else
+      {
+        setEmailError("")
       }
-     if ( !form.email[0].includes( '@' ) )
+      if ( !form.email[0].includes( '@' ) )
         {   
-              setEmailError( 'Invalid email format' );
+              setEmailError( 'Invalid email format ' );
               console.log("inside ")
-              return;
-        }
-       if (!form.password || form.password[0].lenght < 8) {
+              return; 
+      }
+      else
+      {
+        setEmailError("")
+      }
+      if ( !form.password )
+      {
+        setPasswordError( "password Required" )
+        return;
+      }
+      else
+      {
+        setPasswordError("")
+      }
+       if (form.password[0].lenght < 8) {
          console.log("asbeh sira");
          setPasswordError("Password must be at least 8 characters long");
          return;
-       }
+      }
+       else
+       {
+       setPasswordError("")
+      }
       document.getElementById( "email" ).focus();
       
       if ( form.email && form.password )
       {
-            const regex = /^\S+@\S+\.\S+$/;
-            if (!regex.test(form.email[0])) {
-              setEmailError( "Invalid email format" );
-              console.log("again inside ")
-              return;
-            }
-      
-       
+        //     const regex = /^\S+@\S+\.\S+$/;
+        //     if (!regex.test(form.email[0])) {
+        //       setEmailError( "Invalid email format" );
+        //       console.log("again inside ")
+        //       return;
+        // }
+        //     else
+        //     {
+        //       setEmailError("")
+        // }
         try
         {
             axios.post(
@@ -74,19 +100,23 @@ function Login ()
               {
                 console.log("not token yes man ")
                 navigate( "/login" )
-                setPasswordError( response.data.msg );
+                setServerError( response.data.msg );
                 return;
-                }
+              }
+              else
+              {
+                setServerError("");
+              }
                 //set localStorage with the token 
                 localStorage.setItem( "auth-token", response.data.token );
                 localStorage.setItem("user_name", response.data.user.user_name);
                 localStorage.setItem( "user_id", response.data.user.user_id );
               
               // navigate("/"); // this is replace the useEffect function below use either of them.
-              if ( !response.data.user )
-              {
-                setServerError(response.data.msg)
-              }
+              // if ( !response.data.user )
+              // {
+              //   setServerError(response.data.msg)
+              // }
             } )
           }
           
@@ -148,7 +178,7 @@ function Login ()
                 <Link onClick={creatAccount} className='changeColor'>Create a new account</Link>
               </h3>
                 <form onSubmit={ handleSubmit }>
-                {serverError && <div className="validation-error" role="alert">{serverError}</div>}
+            
                 <input
                   placeholder="Your Email"
                   className="emailInput"
@@ -157,7 +187,7 @@ function Login ()
                   name="email"
                   onChange={handleChange}
                   />
-                  {emailError && <div className="validation-error" role="alert">{emailError}</div>}
+                  {emailError ? <div className="validation-error" role="alert">{emailError}</div> : ""}
                 <br />
                 <input
                   className="passwordInput"
@@ -166,7 +196,8 @@ function Login ()
                   placeholder="Your Password"
                   onChange={handleChange}
                   />
-                  {passwordError && <div className="validation-error" role="alert">{passwordError}</div>}
+                    { passwordError ? <div className="validation-error" role="alert">{ passwordError }</div> : "" }
+                      {serverError ? <div className="validation-error" role="alert">{serverError}</div> : ""}
                 <br />
                 <button className="superParent__signinPage__marginTop">
                Sign in

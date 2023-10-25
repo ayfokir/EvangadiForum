@@ -131,7 +131,11 @@ module.exports = {
       }
       //results.user_password: ke database yemetaw
       console.log("see below the Password from database ");
-      console.log(results.user__password);
+      console.log( results.user__password );
+      // if ( password.length < 8 )
+      // {
+      //   return res.json({ msg: " Password must be at least 8 characters long" });
+      // }
       const isMatch = await bcrypt.compare(
         password.toString(),
         results.user__password
@@ -140,7 +144,7 @@ module.exports = {
       console.log(isMatch);
       if (!isMatch) {
         console.log("error 2");
-        return res.json({ msg: "Invalid Pssword" });
+        return res.json({ msg: "Wrong Password" });
       }
       //token: automatically generate yemedereg json web token new
       const token = jwt.sign({ id: results.user_id }, process.env.JWT_SECRET, {

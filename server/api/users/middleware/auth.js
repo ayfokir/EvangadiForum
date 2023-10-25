@@ -13,7 +13,7 @@ const auth = ( req, res, next ) => // authenticate ketederege buhala "next" yeme
         console.log("below is header token")
         console.log(token)
         if ( !token )
-        {
+        {   
             console.log("Error is happen ayfo")
             return res.status( 401 ).json( { msg: "No authentication token, authorization denied" } );
         }
@@ -28,7 +28,7 @@ const auth = ( req, res, next ) => // authenticate ketederege buhala "next" yeme
         console.log("dershalew inside auth")
         next(); 
     }
-    catch {
+    catch {  
         res.status(500).json({error: error.message})
     }
 }  
